@@ -1,2 +1,2 @@
-# spid-saml-check-op
+# spid-saml-check-idp
 SPID SAML Conformance Test Tool for IdP
