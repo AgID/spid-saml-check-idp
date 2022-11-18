@@ -1,0 +1,175 @@
+#SAMLReport .title {
+    margin-bottom: 30px!important;
+}
+
+#SAMLReport .main {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#SAMLReport button {
+    margin: 5px!important; 
+}
+
+#SAMLReport .test-none {
+    display: block;
+    float: left;
+    width: 50px;
+    line-height: 23px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: grey;
+    color: #fff!important;
+    font-size: 13px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#SAMLReport .test-warning {
+    display: block;
+    float: left;
+    width: 50px;
+    line-height: 23px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: orange;
+    color: #000!important;
+    font-size: 11px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#SAMLReport .test-success {
+    display: block;
+    float: left;
+    width: 50px;
+    line-height: 23px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: green;
+    color: #fff!important;
+    font-size: 13px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#SAMLReport .test-success-self {
+    display: block;
+    float: left;
+    width: 50px;
+    line-height: 23px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: #006000;
+    color: #fff!important;
+    font-size: 13px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#SAMLReport .test-fail {
+    display: block;
+    float: left;
+    width: 50px;
+    line-height: 23px;
+    margin: 1px;
+    border: 1px solid #000;
+    background-color: red;
+    color: #fff!important;
+    font-size: 13px;
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+#SAMLReport .detail-table {
+    border:1px solid #999;
+    background: #FFFFFF;
+    width: 100%;
+}
+
+#SAMLReport .detail-table th, .detail-table td {
+    padding: 5px;
+}
+
+
+#SAMLReport .detail-header {
+    background: #DDDDDD;
+}
+
+#SAMLReport .detail-row {
+    border:1px solid #000;
+    cursor: pointer;
+}
+
+#SAMLReport .detail-row:hover {
+    background: #EEEEEE;
+}
+
+#SAMLReport .detail-num {
+    width: 50px;
+    max-width: 50px;
+}
+
+#SAMLReport .detail-description,
+#SAMLReport .detail-result,
+#SAMLReport .detail-notes {
+    width: 25%;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+#SAMLReport .test-none-dm {
+    background: grey!important;
+    color: #000000;
+}
+
+#SAMLReport .test-success-dm {
+    background: green!important;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#SAMLReport .test-success-self-dm {
+    background: #006000!important;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#SAMLReport .test-warning-dm {
+    background: orange!important;
+    color: #000000;
+    font-weight: bold;
+}
+
+#SAMLReport .test-fail-dm {
+    background: red!important;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#SAMLReport .tools {
+    padding: 30px 20px;
+    background: #FFFFFF;
+}
+
+#SAMLReport .align-super {
+    vertical-align: super;
+}
+
+@media print {
+    #SAMLReport .tools {
+        display: none!important;
+    }
+}

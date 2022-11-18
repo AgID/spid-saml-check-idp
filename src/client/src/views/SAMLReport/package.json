@@ -1,0 +1,6 @@
+{
+  "name": "SAMLReport",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SAMLReport.js"
+}

@@ -1,0 +1,41 @@
+#SAMLCheck .title {
+    margin-bottom: 30px!important;
+}
+
+#SAMLCheck .main {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#SAMLCheck .testcase-diagram {
+    width: 100%;
+}
+
+#SAMLCheck .table-test-num {
+    width: 100px;
+}
+
+#SAMLCheck .switch {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+#SAMLCheck .Select {
+    z-index:999;
+    margin-bottom: 20px;
+}
+
+#SAMLCheck .test-description {
+    width:100%;
+}
+
+#SAMLCheck .tools {
+    padding: 30px 20px;
+    background: #FFFFFF;
+}
+
+#SAMLCheck .align-super {
+    vertical-align: super;
+} 

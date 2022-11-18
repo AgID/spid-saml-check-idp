@@ -1,0 +1,28 @@
+#SAMLLog .title {
+    margin-bottom: 30px!important;
+}
+
+#SAMLLog .main {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#SAMLLog button {
+    margin: 5px!important; 
+}
+
+#SAMLLog .tools {
+    padding: 30px 20px;
+    background: #FFFFFF;
+}
+
+#SAMLLog .align-super {
+    vertical-align: super;
+}
+
+@media print {
+    #SAMLLog .tools {
+        display: none!important;
+    }
+}

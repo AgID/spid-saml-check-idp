@@ -1,0 +1,5 @@
+{
+  "name": "SAMLCheck",
+  "version": "1.0.0",
+  "main": "./SAMLCheck.js"
+}
