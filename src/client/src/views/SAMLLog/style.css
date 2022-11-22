@@ -2,13 +2,20 @@
     margin-bottom: 30px!important;
 }
 
+#SAMLLog .anchor {
+    padding-top: 70px; 
+    margin-top: -70px;
+    color: unset;
+    text-decoration: none;
+}
+
 #SAMLLog .main {
     background: #fff;
     padding: 15px;
     margin-bottom: 20px;
 }
 
-#SAMLLog button {
+#SAMLLog .btn {
     margin: 5px!important; 
 }
 
