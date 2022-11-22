@@ -1,3 +1,6 @@
+const Metadata = require("./saml-protocol/metadata.js");
+const signing = require("./saml-protocol/util/signing");
+const credentials = require("./saml-protocol/util/credentials");
 const samlProtocol = require("./saml-protocol/protocol-bindings");
 const errors = require("./saml-protocol/errors");
 const namespaces = require("./saml-protocol/namespaces");
@@ -15,6 +18,12 @@ class MetadataIDP {
 
     constructor(xml) {
         this.xml = xml;
+    }
+
+    getSignature() {
+        let doc = new DOMParser().parseFromString(this.xml);
+        let signature = select("//md:EntityDescriptor/ds:Signature", doc)[0];
+        return signature;
     }
 
     getSignatureX509() {
@@ -196,6 +205,29 @@ class MetadataIDP {
         }
 
         return extensions;
+    }
+
+    validateSignature() {
+        let valid = false;
+        let error = ["Unable to validate signature"];
+
+        let idp = Metadata.getIDPFromMetadata(this.xml);
+        let certs = credentials.getCredentialsFromEntity(idp, "signing");
+
+
+        let signature = this.getSignature();
+
+        if(signature==null) throw("Signature element not found");
+
+        for(let c in certs) {
+            let cert = certs[c];
+            let err = signing.validateXMLSignature(this.xml, signature, cert);
+            if(!err) valid = true;
+            else error.push(err);
+        }
+
+        if(valid) return true;
+        else throw(error.toString());
     }
 }
 

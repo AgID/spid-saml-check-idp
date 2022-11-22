@@ -168,7 +168,7 @@ class AuthnResponse {
 
         if(signature==null) throw("Signature element not found");
 
-        for(c in certs) {
+        for(let c in certs) {
             let cert = certs[c];
             let err = signing.validateXMLSignature(this.xml, signature, cert);
             if(!err) valid = true;
