@@ -1,0 +1,20 @@
+<samlp:AuthnRequest 
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" 
+    ID="{{RequestID}}" 
+    Version="2.0" 
+    IssueInstant="{{IssueInstant}}" 
+    Destination="{{Destination}}" 
+    ForceAuthn="{{ForceAuthn}}" 
+    AssertionConsumerServiceIndex="{{AssertionConsumerServiceIndex}}" 
+    AttributeConsumingServiceIndex="{{AttributeConsumingServiceIndex}}">
+
+    <saml:Issuer 
+        NameQualifier="{{IssuerNameQualifier}}" 
+        Format="{{IssuerFormat}}">{{Issuer}}</saml:Issuer>
+    <samlp:NameIDPolicy Format="{{NameIDPolicyFormat}}" />
+    <samlp:RequestedAuthnContext 
+        Comparison="{{Comparison}}">
+        <saml:AuthnContextClassRef>{{AuthnContextClassRef}}</saml:AuthnContextClassRef>
+    </samlp:RequestedAuthnContext>
+</samlp:AuthnRequest>

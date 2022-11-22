@@ -13,18 +13,18 @@ const config_sp = require('../config/sp.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_0_0 extends TestAuthRequest {
+class Test_2_10_5 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.0.0";
-        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-Request";
+        this.num = "2.10.5";
+        this.description = "More than one AuthnContextClassRef element are present";
         this.validation = "required";
     }
 
     async exec() {
 
-        const xmlt = "template_base-url";
+        const xmlt = "template_2.10.5";
 
         const sign_credentials = {
             signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
@@ -35,7 +35,7 @@ class Test_2_0_0 extends TestAuthRequest {
         let template = new Template(path.resolve(__dirname, '../test'));
         let defaults = [];
 
-        let protocolBinding = BINDING_REDIRECT;
+        let protocolBinding = BINDING_POST;
 
         let metadata = new MetadataIDP(this.metadata.configuration);
 
@@ -54,7 +54,6 @@ class Test_2_0_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Issuer", config_sp.entity_id);
         Utility.defaultParam(defaults, "NameIDPolicyFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:transient");
         Utility.defaultParam(defaults, "Comparison", "minimum");
-        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL1");
 
         let xml = template.getCompiled(xmlt, [], defaults);
 
@@ -82,4 +81,4 @@ class Test_2_0_0 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_0_0 
+module.exports = Test_2_10_5

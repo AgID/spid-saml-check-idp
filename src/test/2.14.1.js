@@ -13,12 +13,12 @@ const config_sp = require('../config/sp.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_0_0 extends TestAuthRequest {
+class Test_2_14_1 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.0.0";
-        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-Request";
+        this.num = "2.14_1";
+        this.description = "The AuthnRequest does not have a valid signature";
         this.validation = "required";
     }
 
@@ -28,14 +28,14 @@ class Test_2_0_0 extends TestAuthRequest {
 
         const sign_credentials = {
             signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
-            certificate: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig.crt')),
+            certificate: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig-fail.crt')),
             privateKey: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig.key'))
         };
 
         let template = new Template(path.resolve(__dirname, '../test'));
         let defaults = [];
 
-        let protocolBinding = BINDING_REDIRECT;
+        let protocolBinding = BINDING_POST;
 
         let metadata = new MetadataIDP(this.metadata.configuration);
 
@@ -54,7 +54,7 @@ class Test_2_0_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Issuer", config_sp.entity_id);
         Utility.defaultParam(defaults, "NameIDPolicyFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:transient");
         Utility.defaultParam(defaults, "Comparison", "minimum");
-        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL1");
+        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL2");
 
         let xml = template.getCompiled(xmlt, [], defaults);
 
@@ -82,4 +82,4 @@ class Test_2_0_0 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_0_0 
+module.exports = Test_2_14_1

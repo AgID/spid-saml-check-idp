@@ -13,12 +13,12 @@ const config_sp = require('../config/sp.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_0_0 extends TestAuthRequest {
+class Test_2_6_3 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.0.0";
-        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-Request";
+        this.num = "2.6.3";
+        this.description = "The value of AttributeConsumingServiceIndex is not valid (as from SP Metadata)";
         this.validation = "required";
     }
 
@@ -35,7 +35,7 @@ class Test_2_0_0 extends TestAuthRequest {
         let template = new Template(path.resolve(__dirname, '../test'));
         let defaults = [];
 
-        let protocolBinding = BINDING_REDIRECT;
+        let protocolBinding = BINDING_POST;
 
         let metadata = new MetadataIDP(this.metadata.configuration);
 
@@ -48,13 +48,13 @@ class Test_2_0_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "ForceAuthn", "true");
         Utility.defaultParam(defaults, "AssertionConsumerServiceURL", config_server.host + "/samlacs");
         Utility.defaultParam(defaults, "ProtocolBinding", protocolBinding);
-        Utility.defaultParam(defaults, "AttributeConsumingServiceIndex", "0");
+        Utility.defaultParam(defaults, "AttributeConsumingServiceIndex", "123456789");
         Utility.defaultParam(defaults, "IssuerNameQualifier", config_sp.entity_id);
         Utility.defaultParam(defaults, "IssuerFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:entity");
         Utility.defaultParam(defaults, "Issuer", config_sp.entity_id);
         Utility.defaultParam(defaults, "NameIDPolicyFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:transient");
         Utility.defaultParam(defaults, "Comparison", "minimum");
-        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL1");
+        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL2");
 
         let xml = template.getCompiled(xmlt, [], defaults);
 
@@ -82,4 +82,4 @@ class Test_2_0_0 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_0_0 
+module.exports = Test_2_6_3

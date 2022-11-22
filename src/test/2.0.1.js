@@ -13,12 +13,12 @@ const config_sp = require('../config/sp.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_0_0 extends TestAuthRequest {
+class Test_2_0_1 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.0.0";
-        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-Request";
+        this.num = "2.0.1";
+        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-POST";
         this.validation = "required";
     }
 
@@ -35,7 +35,7 @@ class Test_2_0_0 extends TestAuthRequest {
         let template = new Template(path.resolve(__dirname, '../test'));
         let defaults = [];
 
-        let protocolBinding = BINDING_REDIRECT;
+        let protocolBinding = BINDING_POST;
 
         let metadata = new MetadataIDP(this.metadata.configuration);
 
@@ -82,4 +82,4 @@ class Test_2_0_0 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_0_0 
+module.exports = Test_2_0_1 

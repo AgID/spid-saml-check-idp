@@ -13,12 +13,12 @@ const config_sp = require('../config/sp.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_0_0 extends TestAuthRequest {
+class Test_2_13_1 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.0.0";
-        this.description = "The AuthnRequest is valid for SPID Level 1. Binding: HTTP-Request";
+        this.num = "2.13.1";
+        this.description = "The Signature element is not present";
         this.validation = "required";
     }
 
@@ -35,7 +35,7 @@ class Test_2_0_0 extends TestAuthRequest {
         let template = new Template(path.resolve(__dirname, '../test'));
         let defaults = [];
 
-        let protocolBinding = BINDING_REDIRECT;
+        let protocolBinding = BINDING_POST;
 
         let metadata = new MetadataIDP(this.metadata.configuration);
 
@@ -54,22 +54,18 @@ class Test_2_0_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Issuer", config_sp.entity_id);
         Utility.defaultParam(defaults, "NameIDPolicyFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:transient");
         Utility.defaultParam(defaults, "Comparison", "minimum");
-        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL1");
+        Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL2");
 
         let xml = template.getCompiled(xmlt, [], defaults);
 
-        let signer = new Signer(sign_credentials);
-        let signature = signer.sign(xml, SIGN_MODE.GET_SIGNATURE); 
-        let xml_signed = signer.sign(xml, SIGN_MODE.SIGN_REQUEST); 
-
         this.authrequest = {
             RequestID: requestID,
-            Message: (protocolBinding==BINDING_POST)? xml_signed : xml,
+            Message: (protocolBinding==BINDING_POST)? xml : xml,
             Destination: destination,
             ProtocolBinding: protocolBinding,
-            SAMLRequest: (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml_signed, true) : Utility.encodeSAMLRequest(xml),
+            SAMLRequest: (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml, true) : Utility.encodeSAMLRequest(xml),
             SigAlg: encodeURIComponent(sign_credentials.signatureAlgorithm),
-            Signature: base64url(signature),
+            Signature: '',
 
             // if there is no RelayState value, the entire parameter should be omitted 
             // from the signature computation (and not included as an empty parameter name)
@@ -82,4 +78,4 @@ class Test_2_0_0 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_0_0 
+module.exports = Test_2_13_1
