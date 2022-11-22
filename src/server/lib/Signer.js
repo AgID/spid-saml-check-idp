@@ -1,8 +1,10 @@
 const signing = require("./saml-protocol/util/signing");
 
 const SIGN_MODE = {
-    SIGN_REQUEST: 0,
-    GET_SIGNATURE: 1
+    GET_SIGNATURE: 0,
+    SIGN_METADATA: 1,
+    SIGN_REQUEST: 2,
+    SIGN_ASSERTION: 3
 }
 
 
@@ -16,11 +18,14 @@ class Signer {
         mode = (mode!=null)? mode : SIGN_MODE.SIGN_REQUEST;
 
         switch(mode) {
-            case 0: 
-                signed = this.singleSign(xml, "AuthnRequest"); 
-                break;
-            case 1: 
+            case SIGN_MODE.GET_SIGNATURE:
                 signed = this.getSignature(xml); 
+                break;
+            case SIGN_MODE.SIGN_METADATA: 
+                signed = this.singleSign(xml, "EntityDescriptor")
+                break;
+            case SIGN_MODE.SIGN_REQUEST: 
+                signed = this.singleSign(xml, "AuthnRequest"); 
                 break;
         }
         return signed;

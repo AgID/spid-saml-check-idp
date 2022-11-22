@@ -8,7 +8,7 @@ import sha256 from 'crypto-js/sha256';
 class Utility {
 
     static isObject(obj) {
-        return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
+        return typeof obj == 'object' || Array.isArray(obj);
     }
 
     static log(tag, text) {

@@ -4,9 +4,10 @@ const base64url = require('../server/node_modules/base64url');
 const TestAuthRequest = require('../server/lib/test/TestAuthRequest.js');
 const Template = require('../server/lib/test/Template.js');
 const Utility = require('../server/lib/utils.js');
-const MetadataIdP = require('../server/lib/MetadataIdP.js');
+const MetadataIDP = require('../server/lib/MetadataIDP.js');
 const Signer = require('../server/lib/Signer.js').Signer;
 const SIGN_MODE = require('../server/lib/Signer.js').SIGN_MODE;
+const config_server = require('../config/server.json');
 const config_sp = require('../config/sp.json');
 
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
@@ -36,15 +37,16 @@ class Test_2_0_0 extends TestAuthRequest {
 
         let protocolBinding = BINDING_REDIRECT;
 
-        let metadata = new MetadataIdP(this.metadata.configuration);
+        let metadata = new MetadataIDP(this.metadata.configuration);
 
-        let destination = (protocolBinding==BINDING_POST)? metadata.SingleSignOnService('HTTP-POST') : metadata.SingleSignOnService('HTTP-Redirect');
+        let requestID = Utility.getUUID();
+        let destination = (protocolBinding==BINDING_POST)? metadata.getSingleSignOnService('HTTP-POST') : metadata.getSingleSignOnService('HTTP-Redirect');
 
-        Utility.defaultParam(defaults, "RequestID", Utility.getUUID());
+        Utility.defaultParam(defaults, "RequestID", requestID);
         Utility.defaultParam(defaults, "IssueInstant", Utility.getInstant());
         Utility.defaultParam(defaults, "Destination", destination);
         Utility.defaultParam(defaults, "ForceAuthn", "true");
-        Utility.defaultParam(defaults, "AssertionConsumerServiceURL", "ACS");
+        Utility.defaultParam(defaults, "AssertionConsumerServiceURL", config_server.host + "/samlacs");
         Utility.defaultParam(defaults, "ProtocolBinding", protocolBinding);
         Utility.defaultParam(defaults, "AttributeConsumingServiceIndex", "0");
         Utility.defaultParam(defaults, "IssuerNameQualifier", config_sp.entity_id);
@@ -60,24 +62,19 @@ class Test_2_0_0 extends TestAuthRequest {
         let signature = signer.sign(xml, SIGN_MODE.GET_SIGNATURE); 
         let xml_signed = signer.sign(xml, SIGN_MODE.SIGN_REQUEST); 
 
-        this.authrequest.SAMLRequest = {};
-        this.authrequest.RelayState = {};
-        this.authrequest.SigAlg = {};
-        this.authrequest.Signature = {};
-
         this.authrequest = {
+            RequestID: requestID,
             Message: (protocolBinding==BINDING_POST)? xml_signed : xml,
             Destination: destination,
             ProtocolBinding: protocolBinding,
             SAMLRequest: (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml_signed, true) : Utility.encodeSAMLRequest(xml),
+            SigAlg: encodeURIComponent(sign_credentials.signatureAlgorithm),
+            Signature: base64url(signature),
 
             // if there is no RelayState value, the entire parameter should be omitted 
             // from the signature computation (and not included as an empty parameter name)
             // SPID requires RelayState present
-            RelayState: this.authrequest.state? this.authrequest.state : 'state',
-
-            SigAlg: encodeURIComponent(sign_credentials.signatureAlgorithm),
-            Signature: base64url(signature)
+            RelayState: 'state'
         }
 
         console.log(this.authrequest);

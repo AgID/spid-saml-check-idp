@@ -59,7 +59,8 @@ class Database {
                 CREATE TABLE IF NOT EXISTS request ( \
                     req_id          INTEGER PRIMARY KEY AUTOINCREMENT, \
                     req_timestamp   DATETIME DEFAULT (datetime('now')) NOT NULL, \
-                    state           STRING UNIQUE, \
+                    code            STRING UNIQUE, \
+                    state           STRING, \
                     user            STRING, \
                     type            STRING, \
                     testsuite       STRING, \
@@ -345,13 +346,13 @@ class Database {
 
     /* --------- Web Browser SSO AuthnRequest Flow Helper ------------------- */
 
-    saveRequest(state, user, store_type, testsuite, testcase, authrequest) {
-        let code = UUID.generate();
+    saveRequest(code = UUID.generate(), state, user, store_type, testsuite, testcase, authrequest) {
         let stmt = this.db.prepare(" \
-            INSERT INTO request(state, user, type, testsuite, testcase, authrequest) \
-            VALUES(:state, :user, :type, :testsuite, :testcase, :authrequest); \
+            INSERT INTO request(code, state, user, type, testsuite, testcase, authrequest) \
+            VALUES(:code, :state, :user, :type, :testsuite, :testcase, :authrequest); \
         ");
         let info = stmt.run({
+            'code': code,
             'state': state,
             'user': user,
             'type': store_type,
@@ -363,14 +364,14 @@ class Database {
         return req_id;
     }
 
-    getRequest(state) {
+    getRequest(code) {
         let stmt = this.db.prepare(" \
-            SELECT user, type, testsuite, testcase, authrequest FROM request \
-            WHERE state = :state;"
+            SELECT user, type, testsuite, testcase, authrequest, state FROM request \
+            WHERE code = :code;"
         );
 
         let result = stmt.all({
-            'state': state
+            'code': code
         });
 
         let request = null;
@@ -380,7 +381,8 @@ class Database {
                 'type':         result[0]['type'],
                 'testsuite':    result[0]['testsuite'],
                 'testcase':     result[0]['testcase'],
-                'authrequest':  JSON.parse(result[0]['authrequest'])
+                'authrequest':  JSON.parse(result[0]['authrequest']),
+                'state':        result[0]['state']
             }
         }
 

@@ -8,7 +8,7 @@ import "./style.css";
 
 function view(me) { 
     return (
-        <div id="OIDCReport" className="animated fadeIn">
+        <div id="SAMLReport" className="animated fadeIn">
             <p className="title h3">Web Browser SSO Report</p>
             <div className="row">
                 <div className="col-md-8">

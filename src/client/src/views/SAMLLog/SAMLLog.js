@@ -35,10 +35,7 @@ class SAMLLog extends Component {
         this.setState({
           report: report
         }, ()=> {
-          console.log(this.state);
-          Object.keys(this.state.report.cases).map((c)=> {
-            console.log(c);
-          });
+
         });
       }, 
       () => {

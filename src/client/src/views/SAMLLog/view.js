@@ -19,7 +19,7 @@ function view(me) {
                                 <div className="row"> 
                                     <div className="col-sm-12">
                                         <p className="h4">Last execution log</p>
-                                        <AceEditor code={me.state.report.lastlog.details} />
+                                        <AceEditor mode="json" code={me.state.report.lastlog.details} />
                                     </div>
                                 </div>
                             </div>

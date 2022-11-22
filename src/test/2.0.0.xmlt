@@ -12,16 +12,10 @@
 
     <saml:Issuer 
         NameQualifier="{{IssuerNameQualifier}}" 
-        Format="{{IssuerFormat}}">
-            {{Issuer}}
-    </saml:Issuer>
-    <samlp:NameIDPolicy 
-        Format="{{NameIDPolicyFormat}}">
-    </samlp:NameIDPolicy>
+        Format="{{IssuerFormat}}">{{Issuer}}</saml:Issuer>
+    <samlp:NameIDPolicy Format="{{NameIDPolicyFormat}}" />
     <samlp:RequestedAuthnContext 
         Comparison="{{Comparison}}">
-        <saml:AuthnContextClassRef>
-            {{AuthnContextClassRef}}
-        </saml:AuthnContextClassRef>
+        <saml:AuthnContextClassRef>{{AuthnContextClassRef}}</saml:AuthnContextClassRef>
     </samlp:RequestedAuthnContext>
 </samlp:AuthnRequest>

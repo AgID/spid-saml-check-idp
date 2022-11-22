@@ -3,7 +3,7 @@ const axios = require('axios');
 const moment = require('moment');
 const validator = require('validator');
 const Utility = require('../lib/utils');
-const MetadataIdP = require('../lib/MetadataIdP');
+const MetadataIDP = require('../lib/MetadataIDP');
 const config_dir = require('../../config/dir.json');
 const config_test = require("../../config/test.json");
 
@@ -39,9 +39,9 @@ module.exports = function(app, checkAuthorisation, database) {
             Utility.log("metadata url", url);
              
             // validate
-            let metadata = new MetadataIdP(configuration);
-            let entity_id = metadata.EntityId();
-            let organization_name = metadata.Organization().name;
+            let metadata = new MetadataIDP(configuration);
+            let entity_id = metadata.getEntityId();
+            let organization_name = metadata.getOrganization().name;
 
             // Organization not present - Quick Fix
             // TODO: code Organization into spid-saml-check validator metadata

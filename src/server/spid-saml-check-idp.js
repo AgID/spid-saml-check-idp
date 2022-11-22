@@ -102,7 +102,7 @@ var checkBasicAuth = function(req) {
 require('./app/auth')		    (app, checkAuth, authenticator);
 
 /* Service Provider */
-if(config_sp.enabled) require('./app/sp') (app, checkAuth);
+if(config_sp.enabled) require('./app/sp') (app, checkAuth, database);
 
 /* API Validator */
 require('./api/test')    	    (app, checkAuth);
@@ -117,6 +117,13 @@ require('./api/server-info')	(app);
 app.get('*', (req, res)=> {
     console.log("Route to front-end");
     res.sendFile(path.resolve(__dirname + '/../client/build/index.html'));    
+});
+
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error(err)
+    res.status(500).send('Error: ' + err.message);
 });
 
 

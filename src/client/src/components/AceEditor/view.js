@@ -1,6 +1,7 @@
 import React from 'react';
 import AceEditor from 'react-ace';
 import 'brace/mode/xml';
+import 'brace/mode/json';
 import 'brace/theme/cobalt';
 import "./style.css";
 
@@ -8,7 +9,7 @@ function view(me) {
     
     return(
         <AceEditor
-            mode="xml"
+            mode={me.state.mode}
             theme="cobalt"
             name="AceEditor"
             className="AceEditor"

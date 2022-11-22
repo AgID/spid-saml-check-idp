@@ -36,12 +36,7 @@ class SAMLReport extends Component {
         this.setState({
           report: report
         }, ()=> {
-          /*
-          console.log(this.state);
-          Object.keys(this.state.report.cases).map((c)=> {
-            console.log(c);
-          });
-          */
+
         });
       }, 
       () => {
@@ -52,7 +47,7 @@ class SAMLReport extends Component {
                   Please first select a test case from the list and send the authentication request.",
             isOpen: true
         });
-        this.props.navigate("/oidc/check");
+        this.props.navigate("/saml/check");
       }, 
       (error) => { 
         Utility.blockUI(false); 
