@@ -2,6 +2,21 @@
     margin-bottom: 30px!important;
 }
 
+#SAMLCheck .anchor {
+    padding-top: 70px; 
+    margin-top: -70px;
+    color: unset;
+    text-decoration: none;
+}
+
+#SAMLCheck .btn {
+    margin: 5px!important; 
+}
+
+#SAMLCheck .btn-send {
+    margin-top: 50px!important; 
+}
+
 #SAMLCheck .main {
     background: #fff;
     padding: 15px;

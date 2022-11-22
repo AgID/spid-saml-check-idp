@@ -2,6 +2,7 @@ import React from 'react';
 import BlockUi from 'react-block-ui';
 import Select from 'react-select';
 import Sticky from 'react-sticky-el';
+import AceEditor from '../../components/AceEditor/';
 import './switches.css';
 import './style.css';
 
@@ -13,7 +14,8 @@ function view(me) {
                 <div className="col-md-8">
                     <div className="main">
                         <div className="row">
-                            <div className="col-sm-12 mb-5">
+                            <div className="col-sm-12">
+                                <h4><a id="testcase" className="anchor">Test Case</a></h4>
                                 <label for="testcase-selector" className="mb-3">
                                     Select the testcase to check and send the authentication request
                                 </label>
@@ -27,12 +29,15 @@ function view(me) {
                         </div>
                         <div className="row">
                             <div className="col-sm-12 mb-3">
-                                <h4>Description</h4>
-                                <p className="test-description mb-5">{me.state.selected.value.description}</p>
-                                <h4>Sequence Diagram</h4>
-                                <img className="testcase-diagram mb-5" src={"../img/testcase/" + me.state.selected.value.image + ".svg"} /> 
+                                <h4 className="mt-5"><a id="description" className="anchor">Description</a></h4>
+                                <p className="test-description">{me.state.selected.value.description}</p>
+                                <h4 className="mt-5"><a id="diagram" className="anchor">Sequence Diagram</a></h4>
+                                <img className="testcase-diagram" src={"../img/testcase/" + me.state.selected.value.image + ".svg"} /> 
 
-                                <h4>Test List</h4>
+                                <h4 className="mt-5"><a id="request" className="anchor">AuthnRequest</a></h4>
+                                <AceEditor mode="xml" code={me.state.authrequest.Message} />
+
+                                <h4 className="mt-5"><a id="testlist" className="anchor">Test List</a></h4>
                                 {me.state.selected &&
                                     me.state.selected.value &&
                                     me.state.selected.value.hook &&
@@ -67,7 +72,12 @@ function view(me) {
                     <Sticky stickyClassName="sticky-tools" topOffset={-50}>
                         <div className="tools">
                             <div className="col-sm-12">
-                                <button className="btn btn-lg btn-send btn-primary w-100"
+                                <a href="#testcase" className="btn btn-primary">Test Case</a>
+                                <a href="#description" className="btn btn-primary">Description</a>
+                                <a href="#diagram" className="btn btn-primary">Sequence Diagram</a>
+                                <a href="#request" className="btn btn-primary">AuthnRequest</a>
+                                <a href="#testlist" className="btn btn-primary">Test List</a>
+                                <button className="btn btn-lg btn-send btn-success w-100 btn-send"
                                     onClick={()=> {me.sendAuthorizationRequest()}}> 
                                     <i className="fa fa-paper-plane-o me-2" aria-hidden="true"></i>
                                     Send Authentication Request

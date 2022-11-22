@@ -25,6 +25,7 @@ class SAMLCheck extends Component {
       },
 
       authrequest: {
+        Message: '',
         ProtocolBinding: null,
         SAMLRequest: null,
         RelayState: null,
@@ -59,6 +60,8 @@ class SAMLCheck extends Component {
           description: testsuite.description,
           cases: cases,
           selected: cases[0]
+        }, ()=> {
+          this.selectCase(this.state.selected)
         });
       }, 
       (error) => { 
@@ -79,45 +82,17 @@ class SAMLCheck extends Component {
 
   selectCase(val) {
     Utility.log("Selected Case", val);
-    this.setState({ selected: val });
-  }
- 
-  sendAuthorizationRequest() {    
     let service = Services.getMainService(); 
     Utility.blockUI(true);
     service.getAuthorizationRequest(
-      this.state.selected.id,
+      val.id,
       (authrequest) => {
         Utility.blockUI(false);   
+        this.setState({ 
+          selected: val, 
+          authrequest: authrequest 
+        }, ()=> {
 
-        this.setState({ authrequest: authrequest }, ()=> {
-          if(typeof authrequest.Destination === 'string'
-            &&authrequest.Destination!=null 
-            && authrequest.SAMLRequest!=null) {
-
-              if(authrequest.ProtocolBinding=='urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST') {
-
-                  document.getElementById("form_authrequest").submit(); 
-
-              } else { // urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
-
-                let url = authrequest.Destination + 
-                  "?SAMLRequest=" + authrequest.SAMLRequest +
-                  "&RelayState=" + authrequest.RelayState +
-                  "&SigAlg=" + authrequest.SigAlg +
-                  "&Signature=" + authrequest.Signature;
-
-                console.log("AuthnRequest URL", url);
-
-                window.open(url, '_blank');
-              }
-          } else {
-            Utility.showModal({
-              title: "Error",
-              body: "Destination non disponibile. Verificare SingleSignOnService nel metadata.",
-              isOpen: true
-            }); 
-          }
         });
       }, 
       (error) => { 
@@ -129,6 +104,38 @@ class SAMLCheck extends Component {
         });
       }
     );
+  }
+ 
+  sendAuthorizationRequest() {    
+    let authrequest = this.state.authrequest;
+
+    if(typeof authrequest.Destination === 'string'
+      &&authrequest.Destination!=null 
+      && authrequest.SAMLRequest!=null) {
+
+        if(authrequest.ProtocolBinding=='urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST') {
+
+            document.getElementById("form_authrequest").submit(); 
+
+        } else { // urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+
+          let url = authrequest.Destination + 
+            "?SAMLRequest=" + authrequest.SAMLRequest +
+            "&RelayState=" + authrequest.RelayState +
+            "&SigAlg=" + authrequest.SigAlg +
+            "&Signature=" + authrequest.Signature;
+
+          console.log("AuthnRequest URL", url);
+
+          window.open(url, '_blank');
+        }
+    } else {
+      Utility.showModal({
+        title: "Error",
+        body: "Destination non disponibile. Verificare SingleSignOnService nel metadata.",
+        isOpen: true
+      }); 
+    }
   }
 
 

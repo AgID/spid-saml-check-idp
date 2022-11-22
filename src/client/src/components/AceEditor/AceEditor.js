@@ -9,10 +9,14 @@ class AceEditor extends Component {
     super(props);
     let mode = (props.mode!=null)? props.mode : 'xml';
     let code = (props.code!=null)? props.code : '';
-    
-    if(mode=='xml') code = format(code);
-    else if(mode=='json') code = JSON.stringify(code, null, 4);
-    else code = code;
+
+    try {
+      if(mode=='xml') code = format(code);
+      else if(mode=='json') code = JSON.stringify(code, null, 4);
+      else code = code;
+    } catch(err) {
+      console.log(err.message);
+    }
 
     this.state = {
       mode: mode,
@@ -24,9 +28,13 @@ class AceEditor extends Component {
     let mode = (props.mode!=null)? props.mode : 'xml';
     let code = (props.code!=null)? props.code : '';
 
-    if(mode=='xml') code = format(code);
-    else if(mode=='json') code = JSON.stringify(code, null, 4);
-    else code = code;
+    try {
+      if(mode=='xml') code = format(code);
+      else if(mode=='json') code = JSON.stringify(code, null, 4);
+      else code = code;
+    } catch(err) {
+      console.log(err.message);
+    }
 
     return {
       mode: mode,
