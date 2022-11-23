@@ -1,0 +1,8 @@
+{
+  "host": "https://validator-test.spid.gov.it/saml/idp",
+  "port": 8082,
+  "useProxy": true,
+  "useHttps": false,
+	"httpsPrivateKey": "./config/spid-saml-check-idp.key",
+	"httpsCertificate": "./config/spid-saml-check-idp.crt"
+}

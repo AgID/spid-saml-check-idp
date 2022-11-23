@@ -1,0 +1,273 @@
+{
+    "metadata": {
+        "description": "Suite Test Metadata",
+        "cases": {
+            "test-case-metadata-0": {
+                "name": "Test Case Metadata base",
+                "description": "Test Case Metadata base.",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "metadata": [
+                        "1.0.0", "1.2.0", "1.2.1", "1.2.2", "1.2.3", "1.2.4", "1.2.5", "1.2.6",
+                        "1.3.4", "1.3.5", "1.3.6", "1.3.7", "1.3.8", "1.3.11", "1.7.0", "1.10.0", "1.11.0"
+                    ] 
+                }
+            }
+        }
+    },
+    "saml-core": {
+        "description": "Suite Test Core",
+        "cases": {
+            "test-case-saml-core-0": {
+                "name": "0 - SAML Core base (SPID Level 1, Binding: HTTP-Redirect)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 1. Binding: HTTP-Redirect",
+                "image": "test-case-saml-core",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [
+                        "2.0.0"
+                    ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-saml-core-1": {
+                "name": "1 - SAML Core base (SPID Level 1, Binding: HTTP-POST)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 1. Binding: HTTP-POST",
+                "image": "test-case-saml-core",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [
+                        "2.0.1"
+                    ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-saml-core-2": {
+                "name": "2 - SAML Core base (SPID Level 2, Binding: HTTP-Redirect)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-Redirect",
+                "image": "test-case-saml-core",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [
+                        "2.0.2"
+                    ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-saml-core-3": {
+                "name": "3 - SAML Core base (SPID Level 2, Binding: HTTP-POST)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST",
+                "image": "test-case-saml-core",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [
+                        "2.0.3"
+                    ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-saml-core-4": {
+                "name": "4 - AssertionConsumerServiceIndex is present and is not a number",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceIndex: index",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.1" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-5": {
+                "name": "5 - AssertionConsumerServiceIndex is present and is not a valid index",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceIndex: 123456789",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.2" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-6": {
+                "name": "6 - AssertionConsumerService(Index and URL) are both present",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceIndex: 1. AssertionConsumerServiceURL: /acs",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.3" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-7": {
+                "name": "7 - AssertionConsumerService(Index and URL) are both not present",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceIndex and AssertionConsumerServiceURL both not present",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.4" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-8": {
+                "name": "8 - AssertionConsumerServiceURL is present and is not a URL",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceURL: imnoturl",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.5" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-9": {
+                "name": "9 - AssertionConsumerServiceURL is present and is not a valid URL (as from SP Metadata)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AssertionConsumerServiceURL: /samlacsisnotvalid",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.4.6" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-10": {
+                "name": "10 - The AttributeConsumingServiceIndex attribute does not have a value",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AttributeConsumingServiceIndex: ''",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.6.1" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-11": {
+                "name": "11 - The value of AttributeConsumingServiceIndex attribute is < 0",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AttributeConsumingServiceIndex: '-2'",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.6.2" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-12": {
+                "name": "12 - The value of AttributeConsumingServiceIndex is not valid (as from SP Metadata)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AttributeConsumingServiceIndex: '123456789'",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.6.3" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-13": {
+                "name": "13 - The Issuer element does not have a value",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Issuer: ''",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.8.2" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-14": {
+                "name": "14 - The value of Issuer is different from EntityID of SP metadata",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Issuer: '<EntityID>-different'",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.8.3" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-15": {
+                "name": "15 - The Comparison attribute is not present",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Comparison not present",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.2" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-16": {
+                "name": "16 - The Comparison attribute does not have a value",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Comparison: ''",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.3" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-17": {
+                "name": "17 - The value of Comparison attribute is different from “minimum” (WARN)",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Comparison: 'exact'",
+                "image": "test-case-saml-core",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.4" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-18": {
+                "name": "18 - More than one AuthnContextClassRef element are present",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AuthnContextClassRef: ['https://www.spid.gov.it/SpidL1', 'https://www.spid.gov.it/SpidL2', 'https://www.spid.gov.it/SpidL3']",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.5" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-19": {
+                "name": "19 - The AuthnContexClassRef element does not have a value",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AuthnContextClassRef: ''",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.6" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-20": {
+                "name": "20 - The value of AuthnContextClassRef element is not a valid SPID level",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. AuthnContextClassRef: 'https://www.spid.gov.it/SpidL0'",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.10.7" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-21": {
+                "name": "21 - The Signature element is not present",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Signature not present",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.13.1" ],
+                    "authentication-response": []
+                }
+            },
+            "test-case-saml-core-22": {
+                "name": "22 - The AuthnRequest does not have a valid signature",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. Signature not valid",
+                "image": "test-case-request-error",
+                "ref": "SPID-QAD-SAML-IDP",
+                "hook": {
+                    "authentication-request": [ "2.14.1" ],
+                    "authentication-response": []
+                }
+            }
+        }
+    }
+}
