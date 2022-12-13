@@ -47,7 +47,9 @@ class Test_2_0_1 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Destination", destination);
         Utility.defaultParam(defaults, "ForceAuthn", "true");
         Utility.defaultParam(defaults, "AssertionConsumerServiceURL", config_server.host + "/samlacs");
-        Utility.defaultParam(defaults, "ProtocolBinding", protocolBinding);
+        // here is ProtocolBinding of desired response.
+        // request MUST contain AttributeConsumingServiceIndex or AssertionConsumerServiceURL+ProtocolBinding
+        Utility.defaultParam(defaults, "ProtocolBinding", BINDING_POST);
         Utility.defaultParam(defaults, "AttributeConsumingServiceIndex", "0");
         Utility.defaultParam(defaults, "IssuerNameQualifier", config_sp.entity_id);
         Utility.defaultParam(defaults, "IssuerFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:entity");

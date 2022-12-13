@@ -8,6 +8,7 @@ const moment = require("moment");
 const CryptoJS = require("crypto-js");
 const validator = require("validator");
 const fs = require("fs-extra");
+const crypto = require("crypto");
 
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -79,8 +80,7 @@ class Utils {
         if(post) {
             samlRequest = new Buffer(xml).toString('base64')
         } else {
-            samlRequest = zlib.deflateRawSync(xml).toString('base64');
-            samlRequest = encodeURIComponent(samlRequest);
+            samlRequest = zlib.deflateRawSync(xml).toString("base64");
         }
         return samlRequest;
     }
@@ -103,6 +103,17 @@ class Utils {
         }
       
         return dotSplit.reduce((acc, currElem) => acc && validator.isBase64(currElem, { urlSafe: true }), true);
+    }
+
+
+    static sign(data, key, alg = 'RSA-SHA256') {
+        const signature = crypto.sign(alg, Buffer.from(data), key);
+        return signature.toString('base64');
+    }
+
+    static verify(data, signature, crt, alg = 'RSA-SHA256') {
+        const verify = crypto.verify(alg, Buffer.from(data), crt, Buffer.from(signature, 'base64'));
+        return verify;
     }
 }
 

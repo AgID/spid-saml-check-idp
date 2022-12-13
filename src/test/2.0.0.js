@@ -47,7 +47,9 @@ class Test_2_0_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Destination", destination);
         Utility.defaultParam(defaults, "ForceAuthn", "true");
         Utility.defaultParam(defaults, "AssertionConsumerServiceURL", config_server.host + "/samlacs");
-        Utility.defaultParam(defaults, "ProtocolBinding", protocolBinding);
+        // here is ProtocolBinding of desired response.
+        // request MUST contain AttributeConsumingServiceIndex or AssertionConsumerServiceURL+ProtocolBinding
+        Utility.defaultParam(defaults, "ProtocolBinding", BINDING_POST);
         Utility.defaultParam(defaults, "AttributeConsumingServiceIndex", "0");
         Utility.defaultParam(defaults, "IssuerNameQualifier", config_sp.entity_id);
         Utility.defaultParam(defaults, "IssuerFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:entity");
@@ -59,22 +61,31 @@ class Test_2_0_0 extends TestAuthRequest {
         let xml = template.getCompiled(xmlt, [], defaults);
 
         let signer = new Signer(sign_credentials);
-        let signature = signer.sign(xml, SIGN_MODE.GET_SIGNATURE); 
         let xml_signed = signer.sign(xml, SIGN_MODE.SIGN_REQUEST); 
+        
+        let samlRequest = (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml_signed, true) : Utility.encodeSAMLRequest(xml);
+        let relayState = 'state';
+        let sigAlg = sign_credentials.signatureAlgorithm;
+
+        let query = "SAMLRequest=" + encodeURIComponent(samlRequest) 
+            + "&RelayState=" + encodeURIComponent(relayState)
+            + "&SigAlg=" + encodeURIComponent(sigAlg);
+
+        let signature = Utility.sign(query, sign_credentials.privateKey);
 
         this.authrequest = {
             RequestID: requestID,
             Message: (protocolBinding==BINDING_POST)? xml_signed : xml,
             Destination: destination,
             ProtocolBinding: protocolBinding,
-            SAMLRequest: (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml_signed, true) : Utility.encodeSAMLRequest(xml),
-            SigAlg: encodeURIComponent(sign_credentials.signatureAlgorithm),
-            Signature: base64url(signature),
+            SAMLRequest: encodeURIComponent(samlRequest),
+            SigAlg: encodeURIComponent(sigAlg),
+            Signature: (protocolBinding==BINDING_REDIRECT)? encodeURIComponent(signature) : null,
 
             // if there is no RelayState value, the entire parameter should be omitted 
             // from the signature computation (and not included as an empty parameter name)
             // SPID requires RelayState present
-            RelayState: 'state'
+            RelayState: encodeURIComponent(relayState)
         }
 
         console.log(this.authrequest);
