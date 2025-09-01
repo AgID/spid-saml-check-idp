@@ -6,7 +6,7 @@ const credentials = require("./saml-protocol/util/credentials");
 const Metadata = require("./saml-protocol/metadata.js");
 const saml = require("./saml-protocol");
 
-const xmldom = require("xmldom");
+const xmldom = require("@xmldom/xmldom");
 const xpath = require("xpath");
 const DOMParser = xmldom.DOMParser;
 const select = xpath.useNamespaces({

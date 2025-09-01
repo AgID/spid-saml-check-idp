@@ -2,7 +2,7 @@ const config_test = require("../../config/test.json");
  
 module.exports = function(app, checkAuthorisation, database) {
 
-    app.get("//api/saml/authrequest/:testcase", async function(req, res) {
+    app.get("/api/saml/authrequest/:testcase", async function(req, res) {
 
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);
@@ -55,7 +55,7 @@ module.exports = function(app, checkAuthorisation, database) {
         res.status(200).send(authrequest);
     });
 
-    app.get("//api/saml/report", async function(req, res) {
+    app.get("/api/saml/report", async function(req, res) {
         
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);
@@ -81,7 +81,7 @@ module.exports = function(app, checkAuthorisation, database) {
         }
     });
 
-    app.patch("//api/saml/report/:testcase/:hook/:test", async function(req, res) {
+    app.patch("/api/saml/report/:testcase/:hook/:test", async function(req, res) {
         
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);

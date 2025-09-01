@@ -9,7 +9,7 @@ const config_rp = require("../../config/sp.json");
 module.exports = function(app, checkAuthorisation, authenticator) {
 
     // local authentication
-    app.get("//login", (req, res)=> {
+    app.get("/login", (req, res)=> {
         
         if(config_rp.agidloginAuthentication) {
             res.redirect(authenticator.getAuthURL());
@@ -32,7 +32,7 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     });
 
     // assert if local authentication apikey or AgID Login authentication
-    app.get("//login/assert", (req, res)=> {
+    app.get("/login/assert", (req, res)=> {
 
         // if autoLogin autologin with localloginUser
         if(config_rp.autoLogin) recLocalLoginSession(req);
@@ -81,7 +81,7 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     });
 
     // session logout and AgID Login global logout
-    app.get("//logout", (req, res)=> {
+    app.get("/logout", (req, res)=> {
         req.session.destroy();
         if(config_rp.agidloginAuthentication) {
             res.redirect(authenticator.getLogoutURL());
@@ -91,7 +91,7 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     });
 
     // session logout and AgID Login global logout
-    app.get("//switch/:user", (req, res)=> {
+    app.get("/switch/:user", (req, res)=> {
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);
         if(!authorisation) {
