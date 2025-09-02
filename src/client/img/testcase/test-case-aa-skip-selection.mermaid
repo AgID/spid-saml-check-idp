@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant SP
+    participant User (Browser)
+    participant IdP
+    User (Browser)->>SP: IdP selection
+    SP-->>+User (Browser): 
+    User (Browser)-->>-IdP: SAML AuthnRequest + AttributeAuthority Extension
+    IdP-->>+User (Browser): 
+    User (Browser)-->>-IdP: authentication challenge
+    IdP-->>+User (Browser): (skip AA selection and return AuthnResponse)
+    User (Browser)-->>-SP: AuthnResponse
