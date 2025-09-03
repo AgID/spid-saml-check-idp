@@ -30,13 +30,15 @@ function view(me) {
                         <div className="row">
                             <div className="col-sm-12 mb-3">
                                 <h4 className="mt-5"><a id="description" className="anchor">Description</a></h4>
-                                <p className="test-description">{me.state.selected.value.description}</p>
+                                <p className="test-description">{me.state.selected.value.description}</p>                              
                                 <h4 className="mt-5"><a id="diagram" className="anchor">Sequence Diagram</a></h4>
                                 <img className="testcase-diagram" src={"../img/testcase/" + me.state.selected.value.image + ".svg"} /> 
 
                                 <h4 className="mt-5"><a id="request" className="anchor">AuthnRequest</a></h4>
                                 <AceEditor mode="xml" code={me.state.authrequest.Message} />
 
+                                <h4 className="mt-5"><a id="description" className="anchor">Referements</a></h4>
+                                <p className="test-description">{me.state.selected.value.ref}</p>  
                                 <h4 className="mt-5"><a id="testlist" className="anchor">Test List</a></h4>
                                 {me.state.selected &&
                                     me.state.selected.value &&

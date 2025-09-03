@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant SP
+    participant User (Browser)
+    participant IdP
+    User (Browser)->>SP: IdP selection
+    SP-->>+User (Browser): 
+    User (Browser)-->>-IdP: SAML AuthnRequest + AttributeAuthority Extension<br/>RequiredAttributeAuthority Location: https://aa-test.spid.gov.it
+    IdP-->>+User (Browser): 
+    User (Browser)-->>-IdP: authentication challenge
+    IdP->>+SPID Registry: /oidc/list?entity_type=oauth_authorization_server&trust_marked=true
+    SPID Registry->>IdP: [https://aa-test.spid.gov.it]
+    IdP->>User (Browser): show AA selection list
+    User (Browser)->>IdP: select https://aa-test.spid.gov.it to preauthorize
+    IdP->>User (Browser): show consent form for https://aa-test.spid.gov.it
+    User (Browser)->>IdP: give consent
+    IdP->>IdP: make grant_token for selected AA
+    IdP-->>User (Browser): redirect to SP with Response containing grant_token
+    User (Browser)-->>SP: AuthnResponse

@@ -38,10 +38,13 @@ module.exports = function(app, checkAuthorisation, database) {
             let TestAuthRequestClass = require("../../test/" + tests[t]);
             test = new TestAuthRequestClass(metadata, authrequest);
             if(test.hook==hook) {
-                authrequest = await test.getAuthRequest();
+                ar = await test.getAuthRequest();
 
                 // save request
-                database.saveRequest(authrequest.RequestID, authrequest.RelayState, user, store_type, testsuite, testcase, authrequest);
+                if(ar!=null) {
+                    authrequest = ar;
+                    database.saveRequest(authrequest.RequestID, authrequest.RelayState, user, store_type, testsuite, testcase, authrequest);
+                }
 
                 // save single test to store
                 result = await test.getResult();
