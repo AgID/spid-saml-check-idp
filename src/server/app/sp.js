@@ -86,8 +86,10 @@ module.exports = function(app, checkAuthorisation, database) {
         let samlResponse = new AuthnResponse(authresponse.SAMLResponse);
 
         authresponse.Message = samlResponse.getMessage();
+        authresponse.ResponseID = samlResponse.getID();
         authresponse.InResponseTo = samlResponse.getInResponseTo();
         authresponse.Issuer = samlResponse.getIssuer();
+        authresponse.Extensions = samlResponse.getExtensions();
         authresponse.Destination = samlResponse.getDestination();
         authresponse.Status = samlResponse.getStatus();
         authresponse.Assertion = samlResponse.getAssertion();

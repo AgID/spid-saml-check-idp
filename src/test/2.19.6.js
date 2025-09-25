@@ -74,6 +74,7 @@ class Test_2_19_6 extends TestAuthRequest {
             SAMLRequest: (protocolBinding==BINDING_POST)? Utility.encodeSAMLRequest(xml_signed, true) : Utility.encodeSAMLRequest(xml),
             SigAlg: encodeURIComponent(sign_credentials.signatureAlgorithm),
             Signature: base64url(signature),
+            AuthnContextClassRef: "https://www.spid.gov.it/SpidL2",
 
             // if there is no RelayState value, the entire parameter should be omitted 
             // from the signature computation (and not included as an empty parameter name)

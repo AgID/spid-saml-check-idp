@@ -72,6 +72,53 @@ class AuthnResponse {
         return issuer;
     }
 
+    getExtensions() {
+        let extensions = undefined;
+        let doc = new DOMParser().parseFromString(this.xml);
+        let extensionsElements = select("//samlp:Response/samlp:Extensions", doc);
+        if(extensionsElements.length) extensions = {};
+        for(let i in extensionsElements) {
+            let grantedAttributeAuthority = undefined;
+            let grantedAttributeAuthorityElements = select("spid:GrantedAttributeAuthority", extensionsElements[i]);
+            if(grantedAttributeAuthorityElements.length) grantedAttributeAuthority = [];
+            for(let j in grantedAttributeAuthorityElements) {
+                let grantToken = undefined;
+                let grantTokenElements = select("GrantToken", grantedAttributeAuthorityElements[j]);
+                if(grantTokenElements.length) grantToken = [];
+                for(let k in grantTokenElements) {
+                    let existsDestination = select("boolean(@Destination)", grantTokenElements[k]);
+                    let grantTokenDestination = grantTokenElements[k].getAttribute("Destination");
+                    let grantTokenValue = select("string()", grantTokenElements[k]);
+                    grantToken.push({
+                        Destination: existsDestination? grantTokenDestination : undefined,
+                        GrantToken: grantTokenValue
+                    });
+                }
+                if(grantToken) grantedAttributeAuthority.push(grantToken);
+            }
+            extensions['GrantedAttributeAuthority'] = grantedAttributeAuthority;
+        }        
+        return extensions; 
+    }
+
+    /*
+    getExtensionGrantedAttributeAuthority() {
+        let grantedAttributeAuthority = undefined;
+        let doc = new DOMParser().parseFromString(this.xml);
+        let grantToken = select("//samlp:Response/samlp:Extensions/spid:GrantedAttributeAuthority/GrantToken", doc);
+        if(grantToken.length) grantedAttributeAuthority = [];
+        for(let i in grantToken) {
+            let grantTokenDestination = grantToken[i].getAttribute("Destination");
+            let grantTokenValue = select("string()", grantToken[i]);
+            grantedAttributeAuthority.push({
+                Destination: grantTokenDestination,
+                GrantToken: grantTokenValue
+            });
+        }        
+        return grantedAttributeAuthority; 
+    }
+    */
+
     getStatus() {
         let doc = new DOMParser().parseFromString(this.xml);
         let statusCode = select("//samlp:Response/samlp:Status/samlp:StatusCode", doc)[0].getAttribute("Value");
