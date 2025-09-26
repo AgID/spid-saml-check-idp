@@ -12,12 +12,10 @@ const config_sp = require("../../config/sp.json");
 const config_test = require("../../config/test.json");
 
 
-const validator_basepath = config_sp.basepath=='/'? '':config_sp.basepath;
-
 module.exports = function(app, checkAuthorisation, database) {
 
     // get metadata
-    app.get("//metadata.xml", function (req, res) {
+    app.get("/metadata.xml", function (req, res) {
 
         const key = fs.readFileSync(path.resolve(__dirname, '../../config/spid-saml-check-idp-sig.key'));
         const crt = fs.readFileSync(path.resolve(__dirname, '../../config/spid-saml-check-idp-sig.crt'));
@@ -55,11 +53,11 @@ module.exports = function(app, checkAuthorisation, database) {
     });
 
 
-    app.get("//samlacs", function (req, res) {
+    app.get("/samlacs", function (req, res) {
         res.send("SAML ACS HTTP-Redirect");
     });
 
-    app.post("//samlacs", async function (req, res) {
+    app.post("/samlacs", async function (req, res) {
         
         let report = [];
         let num_success = 0;
@@ -88,8 +86,10 @@ module.exports = function(app, checkAuthorisation, database) {
         let samlResponse = new AuthnResponse(authresponse.SAMLResponse);
 
         authresponse.Message = samlResponse.getMessage();
+        authresponse.ResponseID = samlResponse.getID();
         authresponse.InResponseTo = samlResponse.getInResponseTo();
         authresponse.Issuer = samlResponse.getIssuer();
+        authresponse.Extensions = samlResponse.getExtensions();
         authresponse.Destination = samlResponse.getDestination();
         authresponse.Status = samlResponse.getStatus();
         authresponse.Assertion = samlResponse.getAssertion();
@@ -191,11 +191,11 @@ module.exports = function(app, checkAuthorisation, database) {
         res.status(200).json(log);
     });
 
-    app.get("//samlslo", function (req, res) {
+    app.get("/samlslo", function (req, res) {
         res.send("SAML SLO HTTP-Redirect");
     });
 
-    app.post("//samlslo", function (req, res) {
+    app.post("/samlslo", function (req, res) {
         res.send("SAML SLO HTTP-POST");
     });
     

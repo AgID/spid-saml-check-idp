@@ -2,7 +2,7 @@ const config_test = require("../../config/test.json");
  
 module.exports = function(app, checkAuthorisation, database) {
 
-    app.get("//api/saml/authrequest/:testcase", async function(req, res) {
+    app.get("/api/saml/authrequest/:testcase", async function(req, res) {
 
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);
@@ -38,10 +38,13 @@ module.exports = function(app, checkAuthorisation, database) {
             let TestAuthRequestClass = require("../../test/" + tests[t]);
             test = new TestAuthRequestClass(metadata, authrequest);
             if(test.hook==hook) {
-                authrequest = await test.getAuthRequest();
+                ar = await test.getAuthRequest();
 
                 // save request
-                database.saveRequest(authrequest.RequestID, authrequest.RelayState, user, store_type, testsuite, testcase, authrequest);
+                if(ar!=null) {
+                    authrequest = ar;
+                    database.saveRequest(authrequest.RequestID, authrequest.RelayState, user, store_type, testsuite, testcase, authrequest);
+                }
 
                 // save single test to store
                 result = await test.getResult();
@@ -55,7 +58,7 @@ module.exports = function(app, checkAuthorisation, database) {
         res.status(200).send(authrequest);
     });
 
-    app.get("//api/saml/report", async function(req, res) {
+    app.get("/api/saml/report", async function(req, res) {
         
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);
@@ -81,7 +84,7 @@ module.exports = function(app, checkAuthorisation, database) {
         }
     });
 
-    app.patch("//api/saml/report/:testcase/:hook/:test", async function(req, res) {
+    app.patch("/api/saml/report/:testcase/:hook/:test", async function(req, res) {
         
         // check if apikey is correct
         let authorisation = checkAuthorisation(req);

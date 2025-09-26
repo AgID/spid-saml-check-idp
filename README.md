@@ -3,6 +3,10 @@ SPID SAML Conformance Test Tool for IdP
 
 <img src="doc/spid-saml-check-idp.gif" />
 
+## Requirements
+- Node.js v.22
+- libxml2-utils
+
 ## Setup
 clone the repository
 ```

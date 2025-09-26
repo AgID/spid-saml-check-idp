@@ -1,6 +1,6 @@
 const TestMetadata = require('../server/lib/test/TestMetadata.js');
 const namespaces = require("../server/lib/saml-protocol/namespaces");
-const xmldom = require("../server/node_modules/xmldom");
+const xmldom = require("../server/node_modules/@xmldom/xmldom");
 const xpath = require("../server/node_modules/xpath");
 const DOMParser = xmldom.DOMParser;
 const select = xpath.useNamespaces({
