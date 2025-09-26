@@ -16,6 +16,7 @@ const Utility = require("./lib/utils");
 
 const os = require('os');
 
+const useProxy = config_server.useProxy;
 const useHttps = config_server.useHttps;
 const httpPort = (process.env.NODE_HTTPS_PORT) ? process.env.NODE_HTTPS_PORT : config_server.port;
 
@@ -41,7 +42,17 @@ app.use((req, res, next)=> {
 });
 
 
-app.get("/", function (req, res) { res.redirect(config_server.host + '/') });
+app.get("/", function (req, res, next) { 
+    if(useProxy || !config_server.basepath) {
+        console.log('root base path');
+        return next();
+    }
+    
+    let url = config_server.host;
+    url += (!useProxy && httpPort)? ':' + httpPort : '';
+    url += '/';
+    res.redirect(url);
+});
 
 app.use(bodyParser.json({limit: '3mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '3mb', extended: true}));
@@ -49,10 +60,14 @@ app.use(express.static(path.resolve(__dirname, "..", "client/build")));
 
 app.set('trust proxy', 1);
 app.use(session({
+    name: 'connect-spid-saml-check-idp.sid',
     secret: "SAML CHECK IdP",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60*60000 }  //30*60000: 30min
+    cookie: { 
+        secure: config_server.useHttps? true : false,
+        maxAge: 60*60000 
+    }  //30*60000: 30min
 }));
 
 

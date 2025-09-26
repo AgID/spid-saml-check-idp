@@ -14,7 +14,7 @@ module.exports = {
     },
     entry: "./src/index.js",
     output: {
-        publicPath: config_sp.basepath + 'assets/',  
+        publicPath: (config_sp.basepath? config_sp.basepath : '/') + 'assets/',  
         filename: "[name].bundle.js",
         path: path.resolve(__dirname, 'build/assets'),
         clean: true
@@ -91,7 +91,12 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader'
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            api: "legacy" // legacy | modern
+                        },
+                    },
                 ]
             },
             {

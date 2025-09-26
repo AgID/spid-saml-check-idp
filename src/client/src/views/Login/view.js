@@ -1,5 +1,5 @@
 import React from 'react';
-import BlockUi from 'react-block-ui';
+import { BlockUI } from "ns-react-block-ui";
 import './style.css';
 
 
@@ -9,7 +9,7 @@ function view(me) {
 			<div className="justify-content-center row">
 				<div className="col col-md-8">
 					<div className="card-group">
-						<div className="p-4 card">
+						<div className="p-4 card bg-white">
 							<div className="card-body">
 								<h1>Login</h1>
 								<p className="text-muted">Inserisci le credenziali per accedere</p>

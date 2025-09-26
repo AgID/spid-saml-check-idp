@@ -28,9 +28,14 @@ class TestAuthResponse extends Test {
         }
 
         try {
-            await this.exec();
-            test.result = this.setSuccess();
-            test.message = "SUCCESS";
+            let result = await this.exec();
+            if(result) {
+                test.result = this.setSuccess();
+                test.message = "SUCCESS";
+            } else {
+                test.result = this.setWarning();
+                test.message = "WARNING";
+            }
         } catch(error) {
             test.result = this.setFailure();
             test.message = error;
