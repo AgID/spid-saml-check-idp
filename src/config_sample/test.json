@@ -267,7 +267,94 @@
                     "authentication-request": [ "2.14.1" ],
                     "authentication-response": []
                 }
+            },
+            "test-case-aa-1": {
+                "name": "AA1 - Attribute Authority - AuthnRequest contains the extension RequiredAttributeAuthority but it’s not in the correct place inside AuthnRequest",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is not valid for Attribute Authority selection. IdP MUST follow with Authentication without AA selection",
+                "image": "test-case-aa-skip-selection",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.0" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-aa-2": {
+                "name": "AA2 - Attribute Authority - The RequiredAttributeAuthority does not contain any Location elements",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is not valid for Attribute Authority selection. IdP MUST follow with Authentication without AA selection",
+                "image": "test-case-aa-skip-selection",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.1" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-aa-3": {
+                "name": "AA3 - Attribute Authority - The value of all Location elements inside RequiredAttributeAuthority element are empty",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is not valid for Attribute Authority selection. IdP MUST follow with Authentication without AA selection",
+                "image": "test-case-aa-skip-selection",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.2" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-aa-4": {
+                "name": "AA4 - Attribute Authority - The RequiredAttributeAuthority element is well formed but none of the values of Location elements inside RequiredAttributeAuthority element are present in the SPID OIDC Registry at the entity listing endpoint",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is not valid for Attribute Authority selection. IdP MUST follow with Authentication without AA selection",
+                "image": "test-case-aa-search-skip-selection",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.3" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1"
+                    ]
+                }
+            },
+            "test-case-aa-5": {
+                "name": "AA5 - Attribute Authority - The RequiredAttributeAuthority element is well formed and at least one value of Location elements inside RequiredAttributeAuthority is not empty and is present in the SPID OIDC Registry at the entity listing endpoint. User does not select any AA.",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is valid for Attribute Authority selection. IdP MUST follow with Authentication and AA selection. User does not select any AA, so IdP MUST present consent form but directly redirect to SP with the Response",
+                "image": "test-case-aa-selection-none",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.5", "2.20.1", "2.20.2", "2.20.3", "2.20.4", "2.20.5" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1", 
+                        "3.18.0"
+                    ]
+                }
+            },
+            "test-case-aa-6": {
+                "name": "AA6 - Attribute Authority - The RequiredAttributeAuthority element is well formed and at least one value of Location elements inside RequiredAttributeAuthority is not empty and is present in the SPID OIDC Registry at the entity listing endpoint. User select at least one AA.",
+                "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is valid for Attribute Authority selection. IdP MUST follow with Authentication, AA selection and GrantToken generation. Finally IdP MUST redirect to SP with a Response containing GrantToken for every selected AA",
+                "image": "test-case-aa-selection",
+                "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
+                "hook": {
+                    "authentication-request": [ "2.19.6", "2.20.1", "2.20.2", "2.20.3", "2.20.4", "2.20.5" ],
+                    "authentication-response": [
+                        "3.1.7", "3.1.8", "3.1.9", "3.1.10", "3.3.1", "3.9.4", "3.9.5", "3.10.1", 
+                        "3.14.1", "3.14.2", "3.16.1", "3.16.2", "3.16.3", "3.16.5", "3.17.1",
+                        "3.18.1", "3.18.2", "3.18.3", "3.18.5", "3.19.1", "3.19.2", "3.19.3", "3.19.4",
+                        "3.20.1", "3.20.2", 
+                        "3.21.0", "3.21.1", "3.21.2", "3.21.3", "3.21.4", "3.21.5", "3.21.7",
+                        "3.22.0", "3.22.1", "3.22.2", "3.22.4", "3.22.5", "3.22.6", "3.22.7", "3.22.8", 
+                        "3.22.9", "3.22.10", "3.22.11", "3.22.12", "3.22.13", "3.22.14", "3.22.15", 
+                        "3.22.16", "3.22.17", "3.22.19", "3.22.20", "3.22.21", "3.22.22", "3.22.23", "3.22.24", "3.22.26"
+
+                    ]
+                }
             }
+            
         }
     }
 }
