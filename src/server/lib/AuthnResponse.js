@@ -191,6 +191,25 @@ class AuthnResponse {
         return signature;
     }
 
+    getResponseSignatureX509Certificate() {
+        let doc = new DOMParser().parseFromString(this.xml);
+        let x509 = select("string(//samlp:Response/ds:Signature/ds:KeyInfo/ds:X509Data/ds:X509Certificate)", doc);
+        return "-----BEGIN CERTIFICATE-----\n" + x509 + "\n-----END CERTIFICATE-----";
+    }
+
+    getResponseSignatureDigestMethod() {
+        let doc = new DOMParser().parseFromString(this.xml);
+        let digestAlghoritm = select("//samlp:Response/ds:Signature/ds:SignedInfo/ds:Reference/ds:DigestMethod", doc)[0].getAttribute("Algorithm");
+        switch(digestAlghoritm) {
+            case "http://www.w3.org/2000/09/xmldsig#sha1": return "SHA1";
+            case "http://www.w3.org/2001/04/xmlenc#sha256": return "SHA256";
+            case "http://www.w3.org/2001/04/xmlenc#sha384": return "SHA3834";
+            case "http://www.w3.org/2001/04/xmlenc#sha512": return "SHA512";
+            case "http://www.w3.org/2001/04/xmlenc#ripemd160": return "RIPEMD-160";
+            default: return "unknown";
+        }
+    }
+
     getAssertionSignature() {
         let doc = new DOMParser().parseFromString(this.xml);
         let signature = select("//samlp:Response/saml:Assertion/ds:Signature", doc)[0];
