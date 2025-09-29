@@ -10,7 +10,9 @@
 	"agidloginRedirectURI": "",
 	"agidloginPostLogoutRedirectURI": "",
 
-	"localloginUser": "validator",
-	"localloginPasswordHash": "f82af32160bc53112ca118abbf57fa6fed47eb90291a1d1d92f438ae2ed74ef6",
+	"locallogin": {
+		"validator": "f82af32160bc53112ca118abbf57fa6fed47eb90291a1d1d92f438ae2ed74ef6"
+	},
+
 	"autoLogin": true
 }
