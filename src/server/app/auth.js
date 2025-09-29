@@ -3,7 +3,7 @@ const path = require('path');
 const sha256 = require("sha256");
 const moment = require("moment"); 
 const Utility = require("../lib/utils");
-const config_rp = require("../../config/sp.json");
+const config_sp = require("../../config/sp.json");
 
 
 module.exports = function(app, checkAuthorisation, authenticator) {
@@ -11,20 +11,20 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     // local authentication
     app.get("/login", (req, res)=> {
         
-        if(config_rp.agidloginAuthentication) {
+        if(config_sp.agidloginAuthentication) {
             res.redirect(authenticator.getAuthURL());
     
         } else {
             let user		= req.query.user;
             let password	= req.query.password;
             
-            if((user==config_rp.localloginUser && password==config_rp.localloginPasswordHash)) {
-                let apikey = recLocalLoginSession(req);
+            if((config_sp.locallogin[user] && password==config_sp.locallogin[user])) {
+                let apikey = recLocalLoginSession(req, user);
                 res.status(200).send({ apikey: apikey });
         
             } else {
                 error = {code: 401, msg: "Unauthorized"}
-                console.log("ERROR /auth/local : " + error.msg + " (" + user + " : " + password + ")");
+                console.log("ERROR /login : " + error.msg + " (" + user + " : " + password + ")");
                 res.status(error.code).send(error.msg);
                 return null;				
             }
@@ -34,16 +34,16 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     // assert if local authentication apikey or AgID Login authentication
     app.get("/login/assert", (req, res)=> {
 
-        // if autoLogin autologin with localloginUser
-        if(config_rp.autoLogin) recLocalLoginSession(req);
+        // if autoLogin autologin with first locallogin user
+        if(config_sp.autoLogin) recLocalLoginSession(req, Object.keys(config_sp.locallogin)[0]);
 
         if(req.session!=null && req.session.apikey!=null && req.session.apikey!='') {
             res.status(200).send({
-                remote: config_rp.agidloginAuthentication,
+                remote: config_sp.agidloginAuthentication,
                 apikey: req.session.apikey
             });
         } else {
-            error = {code: 401, data: {msg: "Unauthorized", remote: config_rp.agidloginAuthentication}};
+            error = {code: 401, data: {msg: "Unauthorized", remote: config_sp.agidloginAuthentication}};
             res.status(error.code).send(error.data);
             return null;
         }
@@ -70,7 +70,7 @@ module.exports = function(app, checkAuthorisation, authenticator) {
             let apikey = sha256(userinfo.sub).toString();
             req.session.apikey = apikey;
 
-            res.redirect(config_rp.basepath + "/worksave");
+            res.redirect(config_sp.basepath + "/worksave");
     
         }, (error)=> {
             Utility.log("Error", error);
@@ -83,10 +83,10 @@ module.exports = function(app, checkAuthorisation, authenticator) {
     // session logout and AgID Login global logout
     app.get("/logout", (req, res)=> {
         req.session.destroy();
-        if(config_rp.agidloginAuthentication) {
+        if(config_sp.agidloginAuthentication) {
             res.redirect(authenticator.getLogoutURL());
         } else {
-            res.redirect(config_rp.basepath);
+            res.redirect(config_sp.basepath);
         }
     });
 
@@ -102,15 +102,14 @@ module.exports = function(app, checkAuthorisation, authenticator) {
 
         let user = req.params.user;
         req.session.user = user;
-        res.redirect(config_rp.basepath + "/worksave");
+        res.redirect(config_sp.basepath + "/worksave");
     });
     
 
-    function recLocalLoginSession(req) {
-        let user = config_rp.localloginUser;
-        let passwordHash = config_rp.localloginPasswordHash;
+    function recLocalLoginSession(req, user) {
+        let passwordHash = config_sp.locallogin[user];
         let apikey = sha256(user + passwordHash).toString();	
-        console.log("SUCCESS /auth/local : APIKEY " + apikey);
+        console.log("SUCCESS /login : APIKEY " + apikey);
         req.session.user = user;
         req.session.apikey = apikey;
         return apikey;
