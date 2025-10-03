@@ -20,7 +20,7 @@ function view(me) {
 							<div className={`btn ${me.state.selected_type=='test'? "btn-selector btn-selector-active" : "btn-selector"}`}
 								onClick={()=>{me.setType('test')}}>
 
-								<img src="/img/metadata-test.svg" />
+								<img src="img/metadata-test.svg" />
 								<span className="d-sm-inline">Test Metadata</span>
 							</div>
 						</div>
@@ -30,7 +30,7 @@ function view(me) {
 							<div className={`btn ${me.state.selected_type=='prod'? "btn-selector btn-selector-active" : "btn-selector"}`}
 								onClick={()=>{me.setType('prod')}}>
 
-								<img src="/img/metadata-prod.svg" />
+								<img src="img/metadata-prod.svg" />
 								<span className="d-sm-inline">Production Metadata</span>
 							</div>
 						</div>
@@ -44,7 +44,7 @@ function view(me) {
 						onClick={()=>{me.startContinue()}}>
 
 						<div className="card-body">
-							<h1><img className="img-fluid worksave-img-continue" src="/img/continue.png" />Continue</h1>
+							<h1><img className="img-fluid worksave-img-continue" src="img/continue.png" />Continue</h1>
 							<p className="worksave-text-muted">Continue to work on the report from the previous session keeping all the stored test results</p>
 						</div>
 					</div>
@@ -54,7 +54,7 @@ function view(me) {
 						onClick={(e)=>{me.startNew()}}>
 
 						<div className="card-body">
-							<h1><img className="img-fluid worksave-img-new" src="/img/new.png" />Start New</h1>
+							<h1><img className="img-fluid worksave-img-new" src="img/new.png" />Start New</h1>
 							<p className="worksave-text-muted">Start a new session to work on a blank report resetting all the previous stored results</p>
 						</div>
 					</div>
