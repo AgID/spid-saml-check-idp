@@ -14,12 +14,12 @@ const config_aa = require('../config/aa.json');
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
 
-class Test_2_19_5 extends TestAuthRequest {
+class Test_2_19_4 extends TestAuthRequest {
     
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
-        this.num = "2.19.5";
-        this.description = "The RequiredAttributeAuthority element is well formed and at least one value of Location elements inside RequiredAttributeAuthority is not empty and is present in the SPID OIDC Registry at the entity listing endpoint. User does not select any AA. SPID Level 2. Binding: HTTP-POST";
+        this.num = "2.19.4";
+        this.description = "The RequiredAttributeAuthority element is well formed and at least one value of Location elements inside RequiredAttributeAuthority is not empty and is present in the SPID OIDC Registry at the entity listing endpoint. SPID Level 2. Binding: HTTP-POST";
         this.validation = "required";
     }
 
@@ -87,4 +87,4 @@ class Test_2_19_5 extends TestAuthRequest {
 
 }
 
-module.exports = Test_2_19_5
+module.exports = Test_2_19_4

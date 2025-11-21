@@ -90,6 +90,7 @@ module.exports = function(app, checkAuthorisation, database) {
         authresponse.InResponseTo = samlResponse.getInResponseTo();
         authresponse.Issuer = samlResponse.getIssuer();
         authresponse.Extensions = samlResponse.getExtensions();
+        authresponse.ExtensionsNamespace = samlResponse.getExtensionsNamespace();
         authresponse.Destination = samlResponse.getDestination();
         authresponse.Status = samlResponse.getStatus();
         authresponse.Assertion = samlResponse.getAssertion();

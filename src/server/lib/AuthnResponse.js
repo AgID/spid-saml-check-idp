@@ -101,6 +101,18 @@ class AuthnResponse {
         return extensions; 
     }
 
+    getExtensionsNamespace() {
+        let extensionsNS = undefined;
+        let doc = new DOMParser().parseFromString(this.xml);
+        let extensionsElements = select("//samlp:Response/samlp:Extensions", doc);
+        if(extensionsElements.length) extensionsNS = {};
+        for(let i in extensionsElements) {
+            let grantedAttributeAuthorityElements = select("spid:GrantedAttributeAuthority", extensionsElements[i]);
+            extensionsNS['GrantedAttributeAuthority'] = grantedAttributeAuthorityElements[0].namespaceURI;
+        }        
+        return extensionsNS; 
+    }
+
     /*
     getExtensionGrantedAttributeAuthority() {
         let grantedAttributeAuthority = undefined;
