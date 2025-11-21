@@ -9,6 +9,7 @@ const Signer = require('../server/lib/Signer.js').Signer;
 const SIGN_MODE = require('../server/lib/Signer.js').SIGN_MODE;
 const config_server = require('../config/server.json');
 const config_sp = require('../config/sp.json');
+const config_aa = require('../config/aa.json');
 
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
@@ -56,7 +57,7 @@ class Test_2_19_6 extends TestAuthRequest {
         Utility.defaultParam(defaults, "Comparison", "minimum");
         Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL2");
 
-        Utility.defaultParam(defaults, "RequiredAttributeAuthorityLocation1", "https://aa-test.spid.gov.it");
+        Utility.defaultParam(defaults, "RequiredAttributeAuthorityLocation1", config_aa.host);
         Utility.defaultParam(defaults, "RequiredAttributeAuthorityLocation2", "");
         Utility.defaultParam(defaults, "RequiredAttributeAuthorityLocation3", "");
 
