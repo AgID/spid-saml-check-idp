@@ -28,8 +28,8 @@ class Test_2_14_1 extends TestAuthRequest {
 
         const sign_credentials = {
             signatureAlgorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
-            certificate: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig-fail.crt')),
-            privateKey: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig.key'))
+            certificate: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig.crt')),
+            privateKey: fs.readFileSync(path.resolve(__dirname, '../config/spid-saml-check-idp-sig-fail.key'))
         };
 
         let template = new Template(path.resolve(__dirname, '../test'));
