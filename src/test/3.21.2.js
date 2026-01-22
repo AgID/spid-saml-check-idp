@@ -3,6 +3,7 @@ const Utils = require('../server/lib/utils.js');
 const path = require("path");
 const fs = require("fs");
 const jose = require('../server/node_modules/node-jose');
+const config_aa = require ('../config/aa.json');
 
 class Test_3_21_2 extends TestAuthResponse {
 
@@ -43,7 +44,7 @@ class Test_3_21_2 extends TestAuthResponse {
                 throw("GrantToken is not a valid JWE");
             }
 
-            const config_prv_aa_key = fs.readFileSync(path.resolve(__dirname, '../config/attribute-authority-private-enc.key'));
+            const config_prv_aa_key = fs.readFileSync(path.resolve(__dirname, '../config/' + config_aa['private_enc_key_path']));
             const keystore = jose.JWK.createKeyStore();
             
             const prv_key = await keystore.add(config_prv_aa_key, 'pem');

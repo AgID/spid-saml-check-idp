@@ -5,6 +5,8 @@ const path = require("path");
 const fs = require("fs");
 const jose = require('../server/node_modules/node-jose');
 const moment = require('../server/node_modules/moment');
+const MetadataIDP = require('../server/lib/MetadataIDP.js');
+const config_aa = require ('../config/aa.json');
 
 class Test_3_22_19 extends TestAuthResponse {
 
@@ -45,7 +47,7 @@ class Test_3_22_19 extends TestAuthResponse {
                 throw("GrantToken is not a valid JWE");
             }
 
-            const config_prv_aa_key = fs.readFileSync(path.resolve(__dirname, '../config/attribute-authority-private-enc.key'));
+            const config_prv_aa_key = fs.readFileSync(path.resolve(__dirname, '../config/' + config_aa['private_enc_key_path']));
             const keystore = jose.JWK.createKeyStore();
             
             const prv_key = await keystore.add(config_prv_aa_key, 'pem');
@@ -58,8 +60,8 @@ class Test_3_22_19 extends TestAuthResponse {
                 throw("GrantToken JWE payload is not a valid JWS (Grant Token Inner Signed Token)");
             }
 
-            // TODO: grab public key from idp metadata in config store
-            const config_pub_idp_key = fs.readFileSync(path.resolve(__dirname, '../config/idp-public-sig.crt'));
+            let metadataIdP = new MetadataIDP(this.metadata.configuration);
+            let config_pub_idp_key = "-----BEGIN CERTIFICATE-----\n" + metadataIdP.getSigningCertificateX509() + "\n-----END CERTIFICATE-----";
             
             const pub_crt = await keystore.add(config_pub_idp_key, 'pem');
             let jws = await jose.JWS.createVerify(pub_crt).verify(grantTokenInnerSignedToken);
