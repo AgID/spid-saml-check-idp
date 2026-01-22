@@ -1,6 +1,6 @@
 {
   "name": "spid-saml-check-idp",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "SPID SAML Conformance Test Tool for IdP",
   "main": "spid-saml-check-idp",
   "author": "Michele D'Amico (damikael) - AgID",
