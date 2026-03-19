@@ -374,7 +374,7 @@
                 }
             },
             "test-case-aa-1": {
-                "name": "AA1 - Attribute Authority - AuthnRequest contains the extension RequiredAttributeAuthority but it’s not in the correct place inside AuthnRequest",
+                "name": "AA1 - Attribute Authority - AuthnRequest contains the extension RequiredAttributeAuthorities instead of RequiredAttributeAuthority",
                 "description": "Executes the SAML AuthnRequest for SPID Level 2. Binding: HTTP-POST. The request is not valid for Attribute Authority selection. IdP MUST follow with Authentication without AA selection",
                 "image": "test-case-aa-skip-selection",
                 "ref": "SPID-QAD-SAML-IDP-AttributeAuthority-Request",
