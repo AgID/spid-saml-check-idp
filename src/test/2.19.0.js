@@ -9,6 +9,7 @@ const Signer = require('../server/lib/Signer.js').Signer;
 const SIGN_MODE = require('../server/lib/Signer.js').SIGN_MODE;
 const config_server = require('../config/server.json');
 const config_sp = require('../config/sp.json');
+const config_aa = require('../config/aa.json');
 
 const BINDING_REDIRECT = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect";
 const BINDING_POST = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST";
@@ -18,7 +19,7 @@ class Test_2_19_0 extends TestAuthRequest {
     constructor(metadata, authrequest={}) {
         super(metadata, authrequest);
         this.num = "2.19.0";
-        this.description = "AuthnRequest contains the extension RequiredAttributeAuthority but it’s not in the correct place inside AuthnRequest. SPID Level 2. Binding: HTTP-POST";
+        this.description = "AuthnRequest contains the extension RequiredAttributeAuthorities instead of RequiredAttributeAuthority. SPID Level 2. Binding: HTTP-POST";
         this.validation = "required";
     }
 
@@ -55,6 +56,7 @@ class Test_2_19_0 extends TestAuthRequest {
         Utility.defaultParam(defaults, "NameIDPolicyFormat", "urn:oasis:names:tc:SAML:2.0:nameid-format:transient");
         Utility.defaultParam(defaults, "Comparison", "minimum");
         Utility.defaultParam(defaults, "AuthnContextClassRef", "https://www.spid.gov.it/SpidL2");
+        Utility.defaultParam(defaults, "RequiredAttributeAuthorityLocation1", config_aa.host);
 
         let xml = template.getCompiled(xmlt, [], defaults);
 

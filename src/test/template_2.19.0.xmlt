@@ -13,15 +13,17 @@
     <saml:Issuer 
         NameQualifier="{{IssuerNameQualifier}}" 
         Format="{{IssuerFormat}}">{{Issuer}}</saml:Issuer>
+
+    <samlp:Extensions>
+        <spid:RequiredAttributeAuthorities xmlns:spid="https://spid.gov.it/saml-extensions">
+            <Location>{{RequiredAttributeAuthorityLocation1}}</Location>
+        </spid:RequiredAttributeAuthorities>
+    </samlp:Extensions>
+
     <samlp:NameIDPolicy Format="{{NameIDPolicyFormat}}" />
     <samlp:RequestedAuthnContext 
         Comparison="{{Comparison}}">
         <saml:AuthnContextClassRef>{{AuthnContextClassRef}}</saml:AuthnContextClassRef>
     </samlp:RequestedAuthnContext>
 
-    <samlp:Extensions>
-        <spid:RequiredAttributeAuthority xmlns:spid="https://spid.gov.it/saml-extensions">
-            <Location>https://aa.spid.gov.it</Location>
-        </spid:RequiredAttributeAuthority>
-    </samlp:Extensions>
 </samlp:AuthnRequest>
